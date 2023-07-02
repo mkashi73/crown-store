@@ -1,12 +1,8 @@
-import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  signInWithRedirect,
-  signInWithPopup,
-  GoogleAuthProvider,
-} from "firebase/auth";
-// Your web app's Firebase configuration
-const firebaseConfig = {
+import firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
+
+const config = {
   apiKey: "AIzaSyBcg8uKy1Wi3kQ6FFPIwXkNNXFvcnwxG9Q",
   authDomain: "crwn-clothing-db-544.firebaseapp.com",
   projectId: "crwn-clothing-db-544",
@@ -15,13 +11,14 @@ const firebaseConfig = {
   appId: "1:224656176963:web:1345f578ba64c9a628e1f6",
 };
 
-// Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+firebase.initializeApp(config);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
-  prompt: "select_account",
-});
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
 
-export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+const provider = new firebase.auth.GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" });
+
+export const SignInWithGooglePopup = () => auth.signInWithPopup(provider);
+
+export default firebase;
